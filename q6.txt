@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N;
+    cout << "Enter order of matrix: ";
+    cin >> N;
+
+    int arr[10][10];
+    int temp[100];
+    int m = 0;
+
+    
+    cout << "Enter matrix elements:\n";
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            cin >> arr[i][j];
+            temp[m++] = arr[i][j];   
+        }
+    }
+
+   
+    for (int i = 0; i < m - 1; i++)
+    {
+        for (int j = i + 1; j < m; j++)
+        {
+            if (temp[i] > temp[j])
+            {
+                int swap = temp[i];
+                temp[i] = temp[j];
+                temp[j] = swap;
+            }
+        }
+    }
+
+    
+    m = 0;
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            arr[i][j] = temp[m++];
+        }
+    }
+
+    
+    cout << "\nSorted Matrix:\n";
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}

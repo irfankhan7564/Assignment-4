@@ -1,0 +1,81 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+const int days = 7;
+const int times = 4;
+
+void inpTemp(float temp[days][times])
+{
+    cout << "Enter temperature readings:\n";
+    for (int i = 0; i < days; i++)
+    {
+        cout << "Day " << i + 1 << ":\n";
+        for (int j = 0; j < times; j++)
+        {
+            cout << "  Time " << j + 1 << ": ";
+            cin >> temp[i][j];
+        }
+    }
+}
+
+void findHighLow(float temp[days][times], float &highest, float &lowest)
+{
+    highest = temp[0][0];
+    lowest = temp[0][0];
+
+    for (int i = 0; i < days; i++)
+        for (int j = 0; j < times; j++)
+        {
+            if (temp[i][j] > highest) highest = temp[i][j];
+            if (temp[i][j] < lowest)  lowest  = temp[i][j];
+        }
+}
+
+void calculateDailyAverage(float temp[days][times], float avg[days])
+{
+    for (int i = 0; i < days; i++)
+    {
+        float sum = 0;
+        for (int j = 0; j < times; j++)
+            sum += temp[i][j];
+
+        avg[i] = sum / times;
+    }
+}
+
+void displayTable(float temp[days][times], float avg[days],
+                  float highest, float lowest)
+{
+    cout << "\nTemperature Report\n";
+  
+    cout << "Day\tT1\tT2\tT3\tT4\tAverage\n";
+    cout << "..................................................\n";
+
+    for (int i = 0; i < days; i++)
+    {
+        cout << "Day " << i + 1 << "\t";
+        for (int j = 0; j < times; j++)
+            cout << temp[i][j] << "\t";
+
+        cout << avg[i] << endl;
+    }
+
+    cout << "..................................................\n";
+    cout << "Highest Temperature: " << highest << endl;
+    cout << "Lowest Temperature : " << lowest << endl;
+}
+
+int main()
+{
+    float temperature[days][times];
+    float average[days];
+    float highest, lowest;
+
+    inpTemp(temperature);
+    findHighLow(temperature, highest, lowest);
+    calculateDailyAverage(temperature, average);
+    displayTable(temperature, average, highest, lowest);
+
+    return 0;
+}

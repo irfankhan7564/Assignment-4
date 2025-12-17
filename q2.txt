@@ -1,0 +1,98 @@
+#include <iostream>
+using namespace std;
+
+const int products = 5;
+const int days = 7;
+
+// Function to input sales data
+void inputSales(int sales[products][days])
+{
+    cout << "Enter daily sales data:\n";
+    for (int i = 0; i < products; i++)
+    {
+        cout << "Product " << i + 1 << ":\n";
+        for (int j = 0; j < days; j++)
+        {
+            cout << "  Day " << j + 1 << ": ";
+            cin >> sales[i][j];
+        }
+    }
+}
+
+// Function to calculate weekly revenue for each product
+void calculateRevenue(int sales[products][days], int revenue[products])
+{
+    for (int i = 0; i < products; i++)
+    {
+        revenue[i] = 0;
+        for (int j = 0; j < days ; j++)
+        {
+            revenue[i] += sales[i][j];
+        }
+    }
+}
+
+// Function to find product with maximum weekly revenue
+int findMaxProduct(int revenue[products])
+{
+    int maxIndex = 0;
+
+    for (int i = 1; i < products; i++)
+    {
+        if (revenue[i] > revenue[maxIndex])
+        {
+            maxIndex = i;
+        }
+    }
+    return maxIndex;
+}
+
+// Function to find best sales day overall
+int findBestDay(int sales[products][days])
+{
+    int dayTotal[days] = {0};
+
+    for (int j = 0; j < days; j++)
+    {
+        for (int i = 0; i < products; i++)
+        {
+            dayTotal[j] += sales[i][j];
+        }
+    }
+
+    int bestDay = 0;
+    for (int j = 1; j < days; j++)
+    {
+        if (dayTotal[j] > dayTotal[bestDay])
+        {
+            bestDay = j;
+        }
+    }
+    return bestDay;
+}
+
+// Main function
+int main()
+{
+    int sales[products][days];
+    int revenue[products];
+
+    inputSales(sales);
+    calculateRevenue(sales, revenue);
+
+    int maxProduct = findMaxProduct(revenue);
+    int bestDay = findBestDay(sales);
+
+    cout << "\nWeekly Revenue of Each Product:\n";
+    for (int i = 0; i <products; i++)
+    {
+        cout << "Product " << i + 1 << ": " << revenue[i] << endl;
+    }
+
+    cout << "\nProduct with Maximum Weekly Revenue: Product "
+         << maxProduct + 1 << endl;
+
+    cout << "Best Sales Day Overall: Day " << bestDay + 1 << endl;
+
+    return 0;
+}
